@@ -4,6 +4,7 @@ flask-wtf
 flask-script==2.0.5
 pymongo
 bpython==0.14.2
+mongoengine
 celery
 redis
 scrapy
