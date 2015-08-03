@@ -17,10 +17,10 @@ manager.add_command("runserver", Server(
     use_debugger=True,
     use_reloader=True,
     host="0.0.0.0",
-    port="3000"
+    port="5000"
     )
 )
-manager.command("shell", Shell(
+manager.add_command("shell", Shell(
     make_context=make_shell_context
     )
 )

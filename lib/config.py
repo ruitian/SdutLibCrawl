@@ -15,7 +15,7 @@ class Config:
 
     CSRF_ENABLED = True
 
-    SERVER_NAME = os.getenv('VJ_SERVER_NAME') or 'vj.sdutacm.org'
+    SERVER_NAME = os.getenv('lib_SERVER_NAME') or 'vj.sdutacm.org'
 
     # pagination
     PROBLEM_PER_PAGE = 20
@@ -28,7 +28,7 @@ class Config:
 
     # mongodb
     MONGODB_SETTINGS = {
-        'db': 'VirtualJudge',
+        'db': 'sdutlib',
         'username': '',
         'password': '',
         'host': '127.0.0.1',
