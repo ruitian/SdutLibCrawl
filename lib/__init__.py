@@ -18,13 +18,18 @@ with app.app_context():
 
     db.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = 'auth/login'
+    login_manager.login_view = 'auth.login'
 
     from .views import(
-        bp_auth
+        bp_auth,
+        bp_index
     )
 
     app.register_blueprint(
         bp_auth,
         url_prefix='/auth'
+    )
+    app.register_blueprint(
+        bp_index,
+        url_prefix='/'
     )
