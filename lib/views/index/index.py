@@ -8,5 +8,5 @@ from flask.views import MethodView
 
 class IndexView(MethodView):
 
-    def get():
+    def get(self):
         return render_template('index.html')

@@ -11,32 +11,22 @@ def load_user(id):
 
 
 class UserModel(db.Document, UserMixin):
-    username = db.StringField(max_length=12)
-    password_encode = db.StringField(max_length=128)
+    id = db.SequenceField(primary_key=True)
+    username = db.StringField(max_length=128)
+    password = db.StringField(max_length=128)
 
-    def __init__(self, username, password):
-        self.username = username,
-        self.password = password
-
-    @property
-    def password(self):
-        raise AttributeError(
-            'password is not a readable attribute'
-        )
-
-    @password.setter
-    def generate_password(self, password):
-        self.password_encode = base64.b64encode(password)
+    @staticmethod
+    def generate_password(password):
+        password_encode = base64.b64encode(password)
+        return password_encode
 
     @classmethod
-    def create_user(self, username, password, **kwargs):
-        password = self.generate_password(password)
-        return self.objects.create(
+    def create_user(cls, username, password):
+        password = cls.generate_password(password)
+        return cls.objects.create(
             username=username,
-            password=password,
-            **kwargs
+            password=password
         )
-        self.save()
 
     meta = {
         'collection': 'User'

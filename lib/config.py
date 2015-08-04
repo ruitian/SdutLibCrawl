@@ -15,7 +15,7 @@ class Config:
 
     CSRF_ENABLED = True
 
-    SERVER_NAME = os.getenv('lib_SERVER_NAME') or 'vj.sdutacm.org'
+    SERVER_NAME = os.getenv('lib_SERVER_NAME')
 
     # pagination
     PROBLEM_PER_PAGE = 20
@@ -34,6 +34,23 @@ class Config:
         'host': '127.0.0.1',
         'port': 27017
     }
+
+    # redis
+    REDIS_URL = 'redis://%s:%s/%s' % (
+        os.environ.get('REDIS_HOST', 'localhost'),
+        os.environ.get('REDIS_PORT', '6379'),
+        os.environ.get('REDIS_DATABASE', '1'),
+    )
+
+    # celery
+    CELERY_BROKER_URL = 'redis://%s:%s' % (
+        os.environ.get('REDIS_HOST', 'localhost'),
+        os.environ.get('REDIS_PORT', '6379')
+    )
+    CELERY_BROKER_BACKEND = 'redis://%s:%s' % (
+        os.environ.get('REDIS_HOST', 'localhost'),
+        os.environ.get('REDIS_PORT', '6379')
+    )
 
     @staticmethod
     def init_app(app):

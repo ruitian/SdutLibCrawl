@@ -23,6 +23,6 @@ class LoginView(MethodView):
         form = LoginForm()
         if not form.validate():
             return render_template(self.template, form=form)
-        self.form.login()
+        form.login()
         flash('Login Successful')
         return redirect(url_for('index.index'))
