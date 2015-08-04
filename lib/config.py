@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from celery.schedules import crontab
+
 import os
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -51,6 +54,14 @@ class Config:
         os.environ.get('REDIS_HOST', 'localhost'),
         os.environ.get('REDIS_PORT', '6379')
     )
+
+    CELERYBEAT_SCHEDULE = {
+        'test': {
+            'task': 'lib.data.task.test',
+            'schedule': crontab(minute='*/1'),
+            'args': (1, 2)
+        }
+    }
 
     @staticmethod
     def init_app(app):

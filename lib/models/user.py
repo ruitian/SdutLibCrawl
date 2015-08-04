@@ -7,10 +7,10 @@ import base64
 
 @login_manager.user_loader
 def load_user(id):
-    return UserModel.objects(id=id).first()
+    return AccountItem.objects(id=id).first()
 
 
-class UserModel(db.Document, UserMixin):
+class AccountItem(db.Document, UserMixin):
     id = db.SequenceField(primary_key=True)
     username = db.StringField(max_length=128)
     password = db.StringField(max_length=128)
@@ -21,7 +21,7 @@ class UserModel(db.Document, UserMixin):
         return password_encode
 
     @classmethod
-    def create_user(cls, username, password):
+    def create_account(cls, username, password):
         password = cls.generate_password(password)
         return cls.objects.create(
             username=username,
@@ -29,5 +29,5 @@ class UserModel(db.Document, UserMixin):
         )
 
     meta = {
-        'collection': 'User'
+        'collection': 'AccountItem'
     }

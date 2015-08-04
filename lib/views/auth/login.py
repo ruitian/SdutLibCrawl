@@ -10,6 +10,8 @@ from flask import (  # noqa
 from flask.views import MethodView
 from lib.forms import LoginForm
 
+from lib.data.task import account_init
+
 
 class LoginView(MethodView):
 
@@ -23,6 +25,10 @@ class LoginView(MethodView):
         form = LoginForm()
         if not form.validate():
             return render_template(self.template, form=form)
-        form.login()
+        form.generate_account()
+        account_init.delay(
+            form.username.data,
+            form.password.data,
+        )
         flash('Login Successful')
         return redirect(url_for('index.index'))
