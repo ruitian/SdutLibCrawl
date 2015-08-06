@@ -7,7 +7,9 @@ from crawler import AccountCrawler
 
 
 def make_celery(app):
-    celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
+    celery = Celery(
+        app.import_name, backend='redis://localhost:6379',
+        broker=app.config['CELERY_BROKER_URL'])
     celery.conf.update(app.config)
     TaskBase = celery.Task
 
@@ -25,11 +27,11 @@ celery = make_celery(app)
 
 
 @celery.task()
-def account_init(username, password):
+def account_init(number, passwd):
     crawler = AccountCrawler()
     crawler.crawl(
-        username,
-        password
+        number,
+        passwd
     )
 
 

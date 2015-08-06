@@ -14,21 +14,21 @@ class Crawler():
 
 class AccountCrawler(Crawler):
 
-    def _crawl(self, username, password):
+    def _crawl(self, number, passwd):
         self.crawler.crawl(
             'lib',
-            username=username,
-            password=password
+            number=number,
+            passwd=passwd
             )
         self.crawler.start()
         self.crawler.stop()
 
-    def crawl(self, username, password):
+    def crawl(self, number, passwd):
         p = Process(
             target=self._crawl,
             args=[
-                username,
-                password
+                number,
+                passwd
             ]
         )
         p.start()
