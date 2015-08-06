@@ -25,10 +25,9 @@ class LoginView(MethodView):
         form = LoginForm()
         if not form.validate():
             return render_template(self.template, form=form)
-        form.generate_account()
         account_init.delay(
             form.username.data,
-            form.password.data,
-        )
+            form.password.data)
+        form.generate_account()
         flash('Login Successful')
         return redirect(url_for('index.index'))
