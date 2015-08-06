@@ -54,7 +54,6 @@ class Config:
         os.environ.get('REDIS_HOST', 'localhost'),
         os.environ.get('REDIS_PORT', '6379')
     )
-
     CELERYBEAT_SCHEDULE = {
         'test': {
             'task': 'lib.data.task.test',

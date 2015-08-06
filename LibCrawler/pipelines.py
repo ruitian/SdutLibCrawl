@@ -35,14 +35,15 @@ class MongoPipeline(object):
 
     def process_item(self, item, spider):
         collection_name = item.__class__.__name__
-        if collection_name == 'LibItem':
+        if collection_name == 'AccountItem':
             self.db[collection_name].update(
                 {
                     'barcode': item['barcode'],
                     'title': item['title'],
                     'author': item['author'],
                     'data': item['data'],
-                    'backdata': item['backdata']
+                    'backdata': item['backdata'],
+                    'status': 'True'
                 },
                 {
                     '$set': dict(item)

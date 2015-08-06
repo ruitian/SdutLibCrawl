@@ -3,7 +3,7 @@ import scrapy
 import re
 from scrapy.http import FormRequest, Request  # noqa
 from scrapy.selector import Selector
-from LibCrawler.items import LibcrawlerItem
+from LibCrawler.items import AccountItem
 
 
 class LibSpider(scrapy.Spider):
@@ -22,8 +22,8 @@ class LibSpider(scrapy.Spider):
 
     def __init__(
         self,
-        number='13110581135',
-        passwd='13110581135',
+        number,
+        passwd,
         select='cert_no',
         *args, **kwargs
     ):
@@ -40,7 +40,8 @@ class LibSpider(scrapy.Spider):
                 'passwd': self.passwd,
                 'select': self.select
             },
-            callback=self.after_login
+            callback=self.after_login,
+            dont_filter=True
         )]
 
     def after_login(self, response):
@@ -53,7 +54,7 @@ class LibSpider(scrapy.Spider):
         book = Selector(response)
         if self.is_login:
             for sel in book.xpath('//*[@id="mylib_content"]/table/tr')[1:8]:
-                item = LibcrawlerItem()
+                item = AccountItem()
                 item['barcode'] = sel.xpath('td/text()').extract()[0]
                 item['title'] = sel.xpath('td/a/text()').extract()[0]
                 item['author'] = sel.xpath('td/text()').extract()[1]

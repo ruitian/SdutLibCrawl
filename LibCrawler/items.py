@@ -8,11 +8,10 @@
 import scrapy
 
 
-class LibcrawlerItem(scrapy.Item):
+class AccountItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    barcode = scrapy.Field()
-    title = scrapy.Field()
-    author = scrapy.Field()
-    data = scrapy.Field()
-    backdata = scrapy.Field()
+    username = scrapy.Field()
+    password = scrapy.Field()
+    books = scrapy.Field()
+    status = scrapy.Field()
