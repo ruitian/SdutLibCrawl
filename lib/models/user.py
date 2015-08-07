@@ -16,16 +16,12 @@ class AccountItem(db.Document):
     password = db.StringField(max_length=128)
     status = db.StringField(default='False')
     books = db.DictField()
-    '''
-    barcode = db.StringField(max_length=128)
-    title = db.StringField()
-    author = db.StringField()
-    data = db.StringField()
-    backdata = db.StringField()
-    '''
+    meta = {
+        'collection': 'AccountItem'
+    }
 
 
-class Usermodel(db.Document):
+class UserModel(db.Document):
     id = db.SequenceField(primary_key=True)
     username = db.StringField(max_length=128)
     password = db.StringField(max_length=128)
@@ -37,13 +33,14 @@ class Usermodel(db.Document):
         return password_encode
 
     @classmethod
-    def create_account(cls, username, password):
+    def create_user(cls, username, password, **kwargs):
         password = cls.generate_password(password)
         return cls.objects.create(
             username=username,
-            password=password
+            password=password,
+            **kwargs
         )
 
     meta = {
-        'collection': 'AccountItem'
+        'collection': 'User'
     }

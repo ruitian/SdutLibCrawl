@@ -4,7 +4,8 @@ from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import Required
 
-from lib.models import AccountItem
+from lib.models import UserModel, AccountItem
+import base64
 
 
 class LoginForm(Form):
@@ -12,8 +13,18 @@ class LoginForm(Form):
     password = PasswordField('Password', [Required()])
     submit = SubmitField('Login')
 
+    def generate_passwd(password):
+        password = base64.b64encode(password)
+        return password
+
     def generate_account(self):
-        return AccountItem.create_account(
+        return AccountItem(
+            username=self.username.data,
+            password=self.password.data
+        )
+
+    def generate_user(self):
+        return UserModel.create_user(
             username=self.username.data,
             password=self.password.data
         )
