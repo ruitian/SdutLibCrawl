@@ -18,6 +18,8 @@ class LibSpider(scrapy.Spider):
     ]
 
     download_delay = 0.5
+
+    books = {}
     is_login = False
 
     def __init__(
@@ -52,13 +54,24 @@ class LibSpider(scrapy.Spider):
 
     def parse(self, response):
         book = Selector(response)
+        item = AccountItem()
+        item['username'] = self.number
+        item['password'] = self.passwd
         if self.is_login:
-            for sel in book.xpath('//*[@id="mylib_content"]/table/tr')[1:8]:
-                item = AccountItem()
-                item['barcode'] = sel.xpath('td/text()').extract()[0]
-                item['title'] = sel.xpath('td/a/text()').extract()[0]
-                item['author'] = sel.xpath('td/text()').extract()[1]
-                item['data'] = sel.xpath('td/text()').extract()[2]
-                item['backdata'] = sel.xpath(
-                    'td/font/text()').extract()[0].rstrip()
-                yield item
+            try:
+                for sel in book.xpath(
+                        '//*[@id="mylib_content"]/table/tr')[1:8]:
+                    barcode = sel.xpath('td/text()').extract()[0]
+                    title = sel.xpath('td/a/text()').extract()[0]
+                    author = sel.xpath('td/text()').extract()[1]
+                    data = sel.xpath('td/text()').extract()[2]
+                    backdata = sel.xpath(
+                        'td/font/text()').extract()[0].rstrip()
+                    self.books[barcode] = [title, author, data, backdata]
+                item['books'] = self.books
+                item['status'] = 'True'
+            except:
+                item['status'] = 'False'
+        else:
+            item['status'] = 'False'
+        yield item

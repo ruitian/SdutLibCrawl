@@ -38,12 +38,8 @@ class MongoPipeline(object):
         if collection_name == 'AccountItem':
             self.db[collection_name].update(
                 {
-                    'barcode': item['barcode'],
-                    'title': item['title'],
-                    'author': item['author'],
-                    'data': item['data'],
-                    'backdata': item['backdata'],
-                    'status': 'True'
+                    'username': item['username']
+                    # 'status': item['status'],
                 },
                 {
                     '$set': dict(item)
