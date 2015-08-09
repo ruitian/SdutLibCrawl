@@ -6,6 +6,9 @@ from scrapy.selector import Selector
 from LibCrawler.items import AccountItem
 
 
+is_login = False
+
+
 class LibSpider(scrapy.Spider):
 
     name = 'lib'
@@ -20,7 +23,6 @@ class LibSpider(scrapy.Spider):
     download_delay = 0.5
 
     books = {}
-    is_login = False
 
     def __init__(
         self,

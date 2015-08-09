@@ -10,8 +10,9 @@ from flask.views import MethodView
 # from flask.ext.login import login_user
 from lib.forms import LoginForm
 
-from lib.data.task import account_init
+from lib.data.task import account_init, test
 from lib.models import UserModel, AccountItem
+from celery.result import AsyncResult
 
 
 class LoginView(MethodView):
@@ -27,8 +28,6 @@ class LoginView(MethodView):
         if not form.validate():
             return render_template(self.template, form=form)
 
-        # 判断数据库是否有该用户
-        #
         user = UserModel.objects(username=form.username.data).first()
         if user is None:
             form.generate_user()
@@ -40,8 +39,21 @@ class LoginView(MethodView):
         account_init.delay(
             form.username.data,
             form.password.data)
+        result = test.delay(3, 3)
+        print account_init.id
+        if result.ready():
+            print 'has run'
+            if result.successful():
+                print 'ok!!!'
+            else:
+                if isinstance(result.result, Exception):
+                    print "Task failed due to raising an exception"
+                    raise result.result
+                else:
+                    print "Task failed without raising exception"
+        else:
+            print "Task has not yet run"
 
-        # 判断登陆信息
         content = AccountItem.objects(username=form.username.data).first()
         if content.status == 'False':
             flash('Error!')
