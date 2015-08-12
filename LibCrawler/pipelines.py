@@ -35,10 +35,10 @@ class MongoPipeline(object):
 
     def process_item(self, item, spider):
         collection_name = item.__class__.__name__
-        if collection_name == 'AccountItem':
+        if collection_name == 'VarifyItem':
             self.db[collection_name].update(
                 {
-                    'username': item['username'],
+                    'number': item['number'],
                 },
                 {
                     '$set': dict(item)

@@ -8,10 +8,10 @@
 import scrapy
 
 
-class AccountItem(scrapy.Item):
+class VarifyItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    username = scrapy.Field()
-    password = scrapy.Field()
-    books = scrapy.Field()
+    number = scrapy.Field()
+    passwd = scrapy.Field()
+    # books = scrapy.Field()
     status = scrapy.Field()
