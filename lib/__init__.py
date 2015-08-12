@@ -21,15 +21,15 @@ with app.app_context():
     login_manager.login_view = 'auth.login'
 
     from .views import(
-        bp_auth,
-        bp_index
+        bp_index,
+        bp_libr
     )
 
     app.register_blueprint(
-        bp_auth,
-        url_prefix='/auth'
-    )
-    app.register_blueprint(
         bp_index,
         url_prefix='/'
+    )
+    app.register_blueprint(
+        bp_libr,
+        url_prefix='/libr'
     )

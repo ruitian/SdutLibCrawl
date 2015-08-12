@@ -3,5 +3,9 @@
 {% block title %}Sdut Lib{% endblock %}
 
 {% block page_content %}
-<h1>Hello</h1>
+
+<div class="col-md-3"><a href='{{ url_for("libr.login")}}'><button class="btn primary">图书馆查询</button></div>
+  <div class="col-md-3"><button class="btn primary">成绩查询</button></div>
+  <div class="col-md-3"><button class="btn primary">四级成绩</button></div>
+  <div class="col-md-3"><button class="btn primary">绩点查询</button></div>
 {% endblock %}

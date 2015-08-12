@@ -7,7 +7,6 @@ from flask import (  # noqa
     url_for
 )
 from flask.views import MethodView
-# from flask.ext.login import login_user
 from lib.forms import LoginForm
 
 from lib.data.task import varify_login, login
@@ -15,7 +14,7 @@ from lib.data.task import varify_login, login
 
 class LoginView(MethodView):
 
-    template = 'auth/login.html'
+    template = 'libr/login.html'
 
     def get(self):
         form = LoginForm()
@@ -41,4 +40,4 @@ class LoginView(MethodView):
                 return redirect(url_for('index.index'))
             else:
                 flash('number or password Error!')
-                return redirect(url_for('auth.login'))
+                return redirect(url_for('libr.login'))

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Sdut Lib{% endblock %}
+
+{% block page_content %}
+
+{% if form.csrf_token.errors %}
+  <div class="warning">You have submitted an invalid CSRF token</div>
+{% endif %}
+<form method="post" class='col-md-6 col-md-offset-3'>
+  {{ form.csrf_token }}
+  <div class="form-group">
+    {{ form.username.label(class="col-md-4 control-label")}}
+    {{ form.username(class="form-control")}}
+    {{ form.password.label(class="col-md-4 control-label")}}
+    {{ form.password(class="form-control")}}
+    {{ form.submit(class="btn btn-primary")}}
+  </div>
+</form>
+
+
+{% endblock %}
