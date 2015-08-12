@@ -8,24 +8,24 @@ from mongoengine import NULLIFY
 
 @login_manager.user_loader
 def load_user(id):
-    return AccountItem.objects(id=id).first()
+    return VarifyItem.objects(id=id).first()
 
 
-class AccountItem(db.Document):
-    username = db.StringField(max_length=128)
-    password = db.StringField(max_length=128)
+class VarifyItem(db.Document):
+    number = db.StringField(max_length=128)
+    passwd = db.StringField(max_length=128)
     status = db.StringField(default='False')
-    books = db.DictField()
+    # books = db.DictField()
     meta = {
-        'collection': 'AccountItem'
+        'collection': 'VarifyItem'
     }
 
 
 class UserModel(db.Document):
     id = db.SequenceField(primary_key=True)
-    username = db.StringField(max_length=128)
-    password = db.StringField(max_length=128)
-    library = db.ReferenceField(AccountItem, reverse_delete_rule=NULLIFY)
+    number = db.StringField(max_length=128)
+    passwd = db.StringField(max_length=128)
+    library = db.ReferenceField(VarifyItem, reverse_delete_rule=NULLIFY)
 
     @staticmethod
     def generate_password(password):

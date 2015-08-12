@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from celery.schedules import crontab
+# from celery.schedules import crontab
 
 import os
 
@@ -37,7 +37,6 @@ class Config:
         'host': '127.0.0.1',
         'port': 27017
     }
-
     # redis
     REDIS_URL = 'redis://%s:%s/%s' % (
         os.environ.get('REDIS_HOST', 'localhost'),
@@ -46,6 +45,7 @@ class Config:
     )
 
     # celery
+    '''
     CELERY_BROKER_URL = 'redis://%s:%s' % (
         os.environ.get('REDIS_HOST', 'localhost'),
         os.environ.get('REDIS_PORT', '6379')
@@ -54,13 +54,11 @@ class Config:
         os.environ.get('REDIS_HOST', 'localhost'),
         os.environ.get('REDIS_PORT', '6379')
     )
-    CELERYBEAT_SCHEDULE = {
-        'test': {
-            'task': 'lib.data.task.test',
-            'schedule': crontab(minute='*/1'),
-            'args': (1, 2)
-        }
-    }
+    '''
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+    CELERYBEAT_SCHEDULE = {}
 
     @staticmethod
     def init_app(app):
