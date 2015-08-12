@@ -3,12 +3,14 @@
 from lib import app
 from celery import Celery
 
-from crawler import AccountCrawler
+from crawler import VarifyCrawler
+from lib.models import VarifyItem  # noqa
 
 
 def make_celery(app):
     celery = Celery(
-        app.import_name, backend='redis://localhost:6379',
+        app.name,
+        backend=app.config['CELERY_RESULT_BACKEND'],
         broker=app.config['CELERY_BROKER_URL'])
     celery.conf.update(app.config)
     TaskBase = celery.Task
@@ -27,14 +29,18 @@ celery = make_celery(app)
 
 
 @celery.task()
-def account_init(number, passwd):
-    crawler = AccountCrawler()
+def login(number, passwd):
+    crawler = VarifyCrawler()
     crawler.crawl(
         number,
-        passwd
+        passwd,
     )
 
 
 @celery.task()
-def test(a, b):
-    return a+b
+def varify_login(number):
+    user = VarifyItem.objects(number=number).first()
+    if user.status == 'True':
+        return True
+    else:
+        return False

@@ -12,14 +12,14 @@ class Crawler():
         self.crawler = CrawlerProcess(settings)
 
 
-class AccountCrawler(Crawler):
+class VarifyCrawler(Crawler):
 
     def _crawl(self, number, passwd):
         self.crawler.crawl(
-            'lib',
+            'varify',
             number=number,
             passwd=passwd
-            )
+        )
         self.crawler.start()
         self.crawler.stop()
 
