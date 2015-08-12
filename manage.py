@@ -1,7 +1,7 @@
 from lib import app, db
 from flask.ext.script import Manager, Server, Shell
 
-from lib.models import AccountItem
+from lib.models import UserModel
 
 manager = Manager(app)
 
@@ -10,7 +10,7 @@ def make_shell_context():
     return dict(
         app=app,
         db=db,
-        AccountItem=AccountItem
+        UserModel=UserModel
     )
 
 manager.add_command("runserver", Server(
