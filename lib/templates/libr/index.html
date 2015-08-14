@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Sdut Lib{% endblock %}
+
+{% block page_content %}
+<h1>
+  学号
+  {{ user.number}}
+</h1>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>图书编号</th>
+          <th>图书</th>
+          <th>作者</th>
+          <th>借书日期</th>
+          <th>应还日期</th>
+        </tr>
+      </thead>
+     {% for book in user.books %}
+      <tbody>
+        <tr>
+          <td> 
+            {{ book }} 
+          </td>
+          <td> 
+            {{ user.books[book]['title'] }}
+          </td>
+          <td>
+            {{ user.books[book]['author'] }}
+          </td>
+          <td>
+            {{ user.books[book]['data'] }}
+          </td>
+          <td>
+            {{ user.books[book]['backdata'] }}
+          </td>
+        </tr>
+      </tbody>  
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}
