@@ -3,6 +3,7 @@ celerybeat-schedule
 dump.rdb
 __pycache__/
 *.py[cod]
+*.rdb
 
 # C extensions
 *.so
