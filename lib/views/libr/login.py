@@ -9,7 +9,9 @@ from flask import (  # noqa
 from flask.views import MethodView
 from lib.forms import LoginForm
 
-from lib.data.task import varify_login, login
+from lib.data.task import varify_login, login, books, get_books
+
+user = {}
 
 
 class LoginView(MethodView):
@@ -34,10 +36,19 @@ class LoginView(MethodView):
         if result.state == 'SUCCESS':
             result = varify_login.delay(form.username.data)
             result.get()
-            print result.result
-            if result.result:
-                flash('login SUCCESS')
-                return redirect(url_for('index.index'))
+
+            if result.result is not False:
+
+                user = result.result
+                result = books.delay(user['number'], user['passwd'])
+                result.get()
+                result = get_books.delay(user['number'])
+                result.get()
+
+                user = result.result
+                return render_template(
+                    'libr/index.html',
+                    user=user)
             else:
                 flash('number or password Error!')
-                return redirect(url_for('libr.login'))
+                return redirect(url_for('libr.index'))

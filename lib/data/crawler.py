@@ -33,3 +33,26 @@ class VarifyCrawler(Crawler):
         )
         p.start()
         p.join()
+
+
+class BooksCrawler(Crawler):
+
+    def _crawl(self, number, passwd):
+        self.crawler.crawl(
+            'books',
+            number=number,
+            passwd=passwd
+        )
+        self.crawler.start()
+        self.crawler.stop()
+
+    def crawl(self, number, passwd):
+        p = Process(
+            target=self._crawl,
+            args=[
+                number,
+                passwd
+            ]
+        )
+        p.start()
+        p.join()

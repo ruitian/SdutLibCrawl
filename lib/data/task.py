@@ -3,8 +3,8 @@
 from lib import app
 from celery import Celery
 
-from crawler import VarifyCrawler
-from lib.models import VarifyItem  # noqa
+from crawler import VarifyCrawler, BooksCrawler
+from lib.models import VarifyItem, AccountItem
 
 
 def make_celery(app):
@@ -41,6 +41,22 @@ def login(number, passwd):
 def varify_login(number):
     user = VarifyItem.objects(number=number).first()
     if user.status == 'True':
-        return True
+        return {'number': user.number, 'passwd': user.passwd}
     else:
         return False
+
+
+@celery.task()
+def books(number, passwd):
+    crawler = BooksCrawler()
+    crawler.crawl(
+        number,
+        passwd
+    )
+
+
+@celery.task()
+def get_books(number):
+    user = AccountItem.objects(number=number).first()
+    if user is not None:
+        return user
