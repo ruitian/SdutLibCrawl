@@ -10,7 +10,7 @@
   <div class="table-responsive">
     <table class="table">
       <thead>
-        <tr>
+        <tr class="active">
           <th>图书编号</th>
           <th>图书</th>
           <th>作者</th>
@@ -20,7 +20,7 @@
       </thead>
      {% for book in user.books %}
       <tbody>
-        <tr>
+        <tr class="warning">
           <td> 
             {{ book }} 
           </td>
