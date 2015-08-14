@@ -15,9 +15,20 @@ class VarifyItem(db.Document):
     number = db.StringField(max_length=128)
     passwd = db.StringField(max_length=128)
     status = db.StringField(default='False')
-    # books = db.DictField()
     meta = {
         'collection': 'VarifyItem'
+    }
+
+
+class AccountItem(db.Document):
+    id = db.SequenceField(primary_key=True)
+    number = db.StringField(max_length=128)
+    passwd = db.StringField(max_length=128)
+    books = db.DictField()
+
+    meta = {
+        'collection': 'AccountItem',
+        # 'indexes': ['id', 'barcode']
     }
 
 

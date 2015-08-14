@@ -46,4 +46,13 @@ class MongoPipeline(object):
                 upsert=True,
                 multi=True
             )
+
+        elif collection_name == 'AccountItem':
+            self.db[collection_name].update(
+                {
+                    'number': item['number'],
+                },
+                dict(item),
+                upsert=True
+            )
         return item

@@ -13,5 +13,10 @@ class VarifyItem(scrapy.Item):
     # name = scrapy.Field()
     number = scrapy.Field()
     passwd = scrapy.Field()
-    # books = scrapy.Field()
     status = scrapy.Field()
+
+
+class AccountItem(scrapy.Item):
+    number = scrapy.Field()
+    passwd = scrapy.Field()
+    books = scrapy.Field()
