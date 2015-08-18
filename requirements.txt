@@ -8,3 +8,4 @@ mongoengine
 celery
 redis
 scrapy
+flask-admin
