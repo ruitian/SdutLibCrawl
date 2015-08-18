@@ -7,7 +7,7 @@ from flask import (  # noqa
     url_for
 )
 from flask.views import MethodView
-from lib.forms import LoginForm
+from lib.forms import LibLoginForm
 
 from lib.data.task import varify_login, login, books, get_books
 
@@ -19,11 +19,11 @@ class LoginView(MethodView):
     template = 'libr/login.html'
 
     def get(self):
-        form = LoginForm()
+        form = LibLoginForm()
         return render_template(self.template, form=form)
 
     def post(self):
-        form = LoginForm()
+        form = LibLoginForm()
         if not form.validate():
             return render_template(self.template, form=form)
 
