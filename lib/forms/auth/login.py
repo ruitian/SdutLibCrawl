@@ -1,30 +1,22 @@
 # -*- coding: utf-8 -*-
 
 from flask.ext.wtf import Form
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import Required
-
-from lib.models import UserModel, VarifyItem
-import base64
+from wtforms import PasswordField, StringField, SubmitField
+from wtforms.validators import Required, ValidationError
+from lib.models import UserModel
 
 
 class LoginForm(Form):
-    username = StringField('Username', [Required()])
-    password = PasswordField('Password', [Required()])
-    submit = SubmitField('Login')
+    username = StringField('username', [Required()])
+    password = PasswordField('password', [Required()])
+    submit = SubmitField('Submit')
 
-    def generate_passwd(password):
-        password = base64.b64encode(password)
-        return password
-
-    def generate_account(self):
-        return VarifyItem(
-            username=self.username.data,
-            password=self.password.data
-        )
-
-    def generate_user(self):
-        return UserModel.create_user(
-            username=self.username.data,
-            password=self.password.data
-        )
+    def validate_password(self, field):
+        user = UserModel.objects.filter(
+            username=self.username.data
+        ).first()
+        print user.verify_password(field.data)
+        if user is not None and user.verify_password(field.data):
+            self.user = user
+        else:
+            raise ValidationError('usename or password Error')
