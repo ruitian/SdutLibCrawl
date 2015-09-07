@@ -27,8 +27,8 @@ class AccountItem(db.Document):
     id = db.SequenceField(primary_key=True)
     number = db.StringField(max_length=128)
     passwd = db.StringField(max_length=128)
+    name = db.StringField(max_length=64)
     books = db.DictField()
-
     meta = {
         'collection': 'AccountItem',
         # 'indexes': ['id', 'barcode']
