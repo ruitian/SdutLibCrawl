@@ -10,7 +10,6 @@ import scrapy
 
 class VarifyItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
     number = scrapy.Field()
     passwd = scrapy.Field()
     status = scrapy.Field()
@@ -20,3 +19,4 @@ class AccountItem(scrapy.Item):
     number = scrapy.Field()
     passwd = scrapy.Field()
     books = scrapy.Field()
+    name = scrapy.Field()
