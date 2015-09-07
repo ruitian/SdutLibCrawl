@@ -113,6 +113,8 @@ class BookSpider(scrapy.Spider):
                         'backdata': backdata
                     }
                 item['books'] = self.books
+            item['name'] = response.xpath('//*[@id="menu"]/div/text()').extract()
             item['number'] = self.number
             item['passwd'] = self.passwd
+
         yield item
