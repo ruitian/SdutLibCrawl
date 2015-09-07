@@ -8,7 +8,7 @@ from flask import (  # noqa
 )
 from flask.views import MethodView
 from lib.forms import LibLoginForm
-
+from lib.models import AccountItem
 from lib.data.task import varify_login, login, books, get_books
 
 user = {}
@@ -46,6 +46,8 @@ class LoginView(MethodView):
                 result.get()
 
                 user = result.result
+
+                user = AccountItem.objects(number=user.number).first()
                 return render_template(
                     'libr/index.html',
                     user=user)
